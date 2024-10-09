@@ -9,10 +9,10 @@ def index():
     return render_template('index.html')
 
 @app.route('/live')
-def live():
-    game = gl.GameOfLife(20,20)
-    game.form_new_generation()
-    # print(game.world)
+def live(game = gl.GameOfLife(20,20)):
+    if game.counter > 0:    
+        game.form_new_generation()
+    game.counter += 1
     return render_template('live.html', game=game)
 
 

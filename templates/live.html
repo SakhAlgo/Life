@@ -4,13 +4,16 @@
 {% block app_content %}
 <a class="btn btn-warning home" href="{{ url_for('index')}}">На главную</a>
 <a class="btn btn-info refresh" href="{{ url_for('live')}}">Создать жизнь</a>
-<br>
+<hr>
+<div class="counter">{{ game.counter }}</div>
         <table class='world'>
             {% for i in range(game.world|length) %}
                 <tr>
                 {% for j in range(game.world[i]|length) %}
-                    {% if game.world[i][j] == 1 %}
+                    {% if game.world[i][j] %}
                         <td class="living-cell cell"></td>
+                    {% elif not game.world[i][j] and game.old_world[i][j] %}
+                        <td class="dead_cell cell"></td>
                     {% else %}
                         <td class="cell"></td>
                     {% endif %}
@@ -21,4 +24,9 @@
 {% endblock %}
 
 
-
+{% block scripts %}
+{{ super() }}
+<script> 
+    setInterval(() => window.location.reload(), 1000);
+</script>
+{% endblock %}
